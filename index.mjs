@@ -15,7 +15,7 @@ export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, Refres
 
   if(!prepopulate) return;
   
-  const decoded  = jwtDecode(idToken);
+  const decoded  = jwtDecode(IdToken);
 
   this.User = new CognitoUser({
     Username: decoded['cognito:username'],
