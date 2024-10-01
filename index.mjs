@@ -1,6 +1,6 @@
 import AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import axios from "axios";
-import jwtDecode from "jwt-decode";
+import * as jwtDecode from "jwt-decode";
 
 const { AuthenticationDetails, CognitoUserPool, CognitoUser, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken, CognitoUserSession } = AmazonCognitoIdentity;
 
@@ -131,6 +131,3 @@ Authenticator.prototype.refreshToken = function() {
     })
   });
 }
-
-
-
