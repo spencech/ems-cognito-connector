@@ -23,7 +23,7 @@
         "axios": "^1.7.7"
     },
     "scripts": {
-        "publish": "git add -A . && git commit -m 'prepublish npm package' && npm version patch && npm publish"
+        "publish": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
     "version": "1.0.0"
 }
