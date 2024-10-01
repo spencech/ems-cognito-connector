@@ -18,7 +18,7 @@ export function Authenticator(UserPoolId, ClientId) {
 Authenticator.prototype.setUsername = function(Username) {
   this.Username = Username;
   this.User = new CognitoUser({ Username: this.Username, Pool: this.Pool });
-  this.Details = this.Details ?? new AuthenticationDetails({ Username });
+  this.Details = this.Details || new AuthenticationDetails({ Username });
 }
 
 Authenticator.prototype.requestOtp = async function(OnGenerateOtpEndpoint,OnMailOtpEndpoint) {
