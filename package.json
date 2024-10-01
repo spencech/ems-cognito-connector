@@ -26,5 +26,5 @@
     "scripts": {
         "publish-npm": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
-    "version": "1.0.21"
+    "version": "1.0.22"
 }
