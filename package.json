@@ -20,10 +20,11 @@
     "name": "ems-cognito-connector",
     "peerDependencies": {
         "amazon-cognito-identity-js": "^6.3.12",
+        "jwt-decode": "^4.0.0",
         "axios": "^1.7.7"
     },
     "scripts": {
-        "publish": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
+        "publish-npm": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
     "version": "1.0.12"
 }
