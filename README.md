@@ -117,16 +117,6 @@ const authenticator = new Authenticator(
 - **accessToken**: The access token JWT string.
 - **refreshToken**: The refresh token string.
 
-## Token Management
-
-After successful authentication, tokens are managed internally by the `Authenticator` instance. You can access the tokens as needed:
-
-```javascript
-const idToken = authenticator.getIdToken();
-const accessToken = authenticator.getAccessToken();
-const refreshToken = authenticator.getRefreshToken();
-```
-
 ## Handling Sessions
 
 The `Authenticator` maintains the user session, including handling token refreshes when tokens expire.
