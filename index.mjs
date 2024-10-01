@@ -1,11 +1,6 @@
-import {
-  CognitoUser,
-  CognitoUserPool,
-  AuthenticationDetails,
-  CognitoUserAttribute
-} from 'amazon-cognito-identity-js';
-import { default as axios } from "axios";
-
+import AmazonCognitoIdentity from 'amazon-cognito-identity-js';
+const { AuthenticationDetails, CognitoUserPool, CognitoUser } = AmazonCognitoIdentity;
+import axios from "axios";
 
 export function Authenticator(UserPoolId, ClientId) {
   this.UserPoolId = UserPoolId;
