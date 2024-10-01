@@ -1,9 +1,9 @@
 import AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import axios from "axios";
-import * as jwtDecode from "jwt-decode";
+import * as Decoded from "jwt-decode";
 
 const { AuthenticationDetails, CognitoUserPool, CognitoUser, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken, CognitoUserSession } = AmazonCognitoIdentity;
-
+const { jwtDecode } = Decoded;
 export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken) {
   const prepopulate = IdToken && AccessToken && RefreshToken;
   this.UserPoolId = UserPoolId;
