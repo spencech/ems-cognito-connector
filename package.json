@@ -1,0 +1,29 @@
+{
+    "author": "Chris Spence at Educational Media Solutions",
+    "description": "Wrapper for Amazon Cognito Identity JS in applications developed by Educational Media Solutions",
+    "funding": "https://paypal.me/spencech",
+    "keywords": [
+        "ems",
+        "educational media solutions",
+        "educational",
+        "media",
+        "solutions",
+        "node app",
+        "node application",
+        "utils",
+        "utilities",
+        "nodejs",
+        "cognito"
+    ],
+    "license": "ISC",
+    "main": "index.mjs",
+    "name": "ems-cognito-connector",
+    "peerDependencies": {
+        "amazon-cognito-identity-js": "^6.3.12",
+        "axios": "^1.7.7"
+    },
+    "scripts": {
+        "publish": "git add -A . && git commit -m 'prepublish npm package' && npm version patch && npm publish"
+    },
+    "version": "1.0.0"
+}
