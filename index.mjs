@@ -22,7 +22,7 @@ export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, Refres
     Pool: this.Pool
   });
 
-  this.Details = new AuthenticationDetails({ Username });
+  this.Details = new AuthenticationDetails({ Username: decoded['cognito:username'] });
 
   const idTokenObj = new CognitoIdToken({ IdToken });
   const accessTokenObj = new CognitoAccessToken({ AccessToken });
