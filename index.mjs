@@ -22,9 +22,11 @@ export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, Refres
     Pool: this.pool
   });
 
-  const idTokenObj = new CognitoIdToken({ IdToken: idToken });
-  const accessTokenObj = new CognitoAccessToken({ AccessToken: accessToken });
-  const refreshTokenObj = new CognitoRefreshToken({ RefreshToken: refreshToken });
+  this.Details = new AuthenticationDetails({ Username });
+
+  const idTokenObj = new CognitoIdToken({ IdToken });
+  const accessTokenObj = new CognitoAccessToken({ AccessToken });
+  const refreshTokenObj = new CognitoRefreshToken({ RefreshToken });
   const session = new CognitoUserSession({ IdToken: idTokenObj, AccessToken: accessTokenObj, RefreshToken: refreshTokenObj });
   this.RefreshToken = refreshTokenObj;
   this.User.setSignInUserSession(session);
