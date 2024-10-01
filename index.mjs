@@ -19,7 +19,7 @@ export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, Refres
 
   this.User = new CognitoUser({
     Username: decoded['cognito:username'],
-    Pool: this.pool
+    Pool: this.Pool
   });
 
   this.Details = new AuthenticationDetails({ Username });
