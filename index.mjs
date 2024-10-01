@@ -56,8 +56,7 @@ Authenticator.prototype.submitOtp = async function(ChallengeResponse) {
 Authenticator.prototype.submitPassword = function(Password) {
   this.Details = new AuthenticationDetails({ Username: this.Username, Password});
   return new Promise((resolve, reject) => {
-    if(!this.Pool.getCurrentUser()) authenticateUser(this.User, this.Details, resolve, reject);
-    else return this.User.getSession();
+    authenticateUser(this.User, this.Details, resolve, reject);
   });
 }
 
