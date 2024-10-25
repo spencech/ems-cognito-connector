@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Authenticator = Authenticator;
-var _amazonCognitoIdentityJs = require("amazon-cognito-identity-js");
+var _amazonCognitoIdentityJs = _interopRequireDefault(require("amazon-cognito-identity-js"));
 var _axios = _interopRequireDefault(require("axios"));
 var Decoded = _interopRequireWildcard(require("jwt-decode"));
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
@@ -13,11 +13,20 @@ function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e
 const {
   jwtDecode
 } = Decoded;
+const {
+  CognitoUserPool,
+  CognitoUser,
+  AuthenticationDetails,
+  CognitoIdToken,
+  CognitoAccessToken,
+  CognitoRefreshToken,
+  CognitoUserSession
+} = _amazonCognitoIdentityJs.default;
 function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken) {
   const prepopulate = IdToken && AccessToken && RefreshToken;
   this.UserPoolId = UserPoolId;
   this.ClientId = ClientId;
-  this.Pool = new _amazonCognitoIdentityJs.CognitoUserPool({
+  this.Pool = new CognitoUserPool({
     UserPoolId,
     ClientId
   });
@@ -26,23 +35,23 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
   this.RefreshToken = null;
   if (!prepopulate) return;
   const decoded = jwtDecode(IdToken);
-  this.User = new _amazonCognitoIdentityJs.CognitoUser({
+  this.User = new CognitoUser({
     Username: decoded['cognito:username'],
     Pool: this.Pool
   });
-  this.Details = new _amazonCognitoIdentityJs.AuthenticationDetails({
+  this.Details = new AuthenticationDetails({
     Username: decoded['cognito:username']
   });
-  const idTokenObj = new _amazonCognitoIdentityJs.CognitoIdToken({
+  const idTokenObj = new CognitoIdToken({
     IdToken
   });
-  const accessTokenObj = new _amazonCognitoIdentityJs.CognitoAccessToken({
+  const accessTokenObj = new CognitoAccessToken({
     AccessToken
   });
-  const refreshTokenObj = new _amazonCognitoIdentityJs.CognitoRefreshToken({
+  const refreshTokenObj = new CognitoRefreshToken({
     RefreshToken
   });
-  const session = new _amazonCognitoIdentityJs.CognitoUserSession({
+  const session = new CognitoUserSession({
     IdToken: idTokenObj,
     AccessToken: accessTokenObj,
     RefreshToken: refreshTokenObj
@@ -52,11 +61,11 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
 }
 Authenticator.prototype.setUsername = function (Username) {
   this.Username = Username;
-  this.User = new _amazonCognitoIdentityJs.CognitoUser({
+  this.User = new CognitoUser({
     Username: this.Username,
     Pool: this.Pool
   });
-  this.Details = this.Details || new _amazonCognitoIdentityJs.AuthenticationDetails({
+  this.Details = this.Details || new AuthenticationDetails({
     Username
   });
 };
@@ -122,7 +131,7 @@ Authenticator.prototype.submitOtp = async function (ChallengeResponse) {
   });
 };
 Authenticator.prototype.submitPassword = function (Password) {
-  this.Details = new _amazonCognitoIdentityJs.AuthenticationDetails({
+  this.Details = new AuthenticationDetails({
     Username: this.Username,
     Password
   });
