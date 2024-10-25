@@ -46,5 +46,5 @@
         "build:esm": "babel src --out-file index.mjs --config-file ./babel.config.esm.js",
         "publish-npm": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
-    "version": "1.0.26"
+    "version": "1.0.27"
 }
