@@ -35,8 +35,8 @@
     },
     "scripts": {
         "build": "npm run build:cjs && npm run build:esm",
-        "build:cjs": "babel src --out-file index.js --presets @babel/preset-env --plugins @babel/plugin-transform-modules-commonjs",
-        "build:esm": "babel src --out-file index.mjs --presets @babel/preset-env",
+        "build:cjs": "babel src --out-file index.js --config-file ./babel.config.cjs.js",
+        "build:esm": "babel src --out-file index.mjs --config-file ./babel.config.esm.js",
         "publish-npm": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
     "version": "1.0.23"
