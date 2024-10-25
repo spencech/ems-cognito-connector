@@ -6,6 +6,12 @@
         "@babel/core": "^7.26.0",
         "@babel/preset-env": "^7.26.0"
     },
+    "exports": {
+        ".": {
+            "import": "./index.mjs",
+            "require": "./index.js"
+        }
+    },
     "files": [
         "index.js",
         "index.mjs",
@@ -26,7 +32,8 @@
         "cognito"
     ],
     "license": "ISC",
-    "main": "index.mjs",
+    "main": "index.js",
+    "module": "index.mjs",
     "name": "ems-cognito-connector",
     "peerDependencies": {
         "amazon-cognito-identity-js": "^6.3.12",
