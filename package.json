@@ -1,6 +1,16 @@
 {
     "author": "Chris Spence at Educational Media Solutions",
     "description": "Wrapper for Amazon Cognito Identity JS in applications developed by Educational Media Solutions",
+    "devDependencies": {
+        "@babel/cli": "^7.25.9",
+        "@babel/core": "^7.26.0",
+        "@babel/preset-env": "^7.26.0"
+    },
+    "files": [
+        "index.js",
+        "index.mjs",
+        "src"
+    ],
     "funding": "https://paypal.me/spencech",
     "keywords": [
         "ems",
@@ -20,10 +30,13 @@
     "name": "ems-cognito-connector",
     "peerDependencies": {
         "amazon-cognito-identity-js": "^6.3.12",
-        "jwt-decode": "^4.0.0",
-        "axios": "^1.7.7"
+        "axios": "^1.7.7",
+        "jwt-decode": "^4.0.0"
     },
     "scripts": {
+        "build": "npm run build:cjs && npm run build:esm",
+        "build:cjs": "babel src --out-file index.js --presets @babel/preset-env --plugins @babel/plugin-transform-modules-commonjs",
+        "build:esm": "babel src --out-file index.mjs --presets @babel/preset-env",
         "publish-npm": "git add -A . && git commit --allow-empty -m 'prepublish npm package' && npm version patch && npm publish"
     },
     "version": "1.0.22"
