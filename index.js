@@ -23,8 +23,7 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
   this.RefreshToken = null;
   this.AccessToken = null;
   if (!prepopulate) return;
-  console.log("decoded", Decoded);
-  const decoded = Decoded(IdToken);
+  const decoded = Decoded.jwtDecode(IdToken);
   this.User = new _amazonCognitoIdentityJs.CognitoUser({
     Username: decoded['cognito:username'],
     Pool: this.Pool
