@@ -1,6 +1,6 @@
 import { AuthenticationDetails, CognitoUserPool, CognitoUser, CognitoIdToken, CognitoAccessToken, CognitoRefreshToken, CognitoUserSession } from 'amazon-cognito-identity-js';
 import axios from "axios";
-import { jwtDecode as decode } from "jwt-decode";
+import * as Decoded from "jwt-decode";
 
 export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken) {
   const prepopulate = IdToken && AccessToken && RefreshToken;
@@ -13,8 +13,10 @@ export function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, Refres
   this.AccessToken = null;
 
   if(!prepopulate) return;
+
+  console.log("decoded", Decoded);
   
-  const decoded  = jwtDecode(IdToken);
+  const decoded  = Decoded(IdToken);
 
   this.User = new CognitoUser({
     Username: decoded['cognito:username'],

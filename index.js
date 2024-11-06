@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", {
 exports.Authenticator = Authenticator;
 var _amazonCognitoIdentityJs = require("amazon-cognito-identity-js");
 var _axios = _interopRequireDefault(require("axios"));
-var _jwtDecode = require("jwt-decode");
+var Decoded = _interopRequireWildcard(require("jwt-decode"));
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken) {
   const prepopulate = IdToken && AccessToken && RefreshToken;
@@ -21,7 +23,8 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
   this.RefreshToken = null;
   this.AccessToken = null;
   if (!prepopulate) return;
-  const decoded = jwtDecode(IdToken);
+  console.log("decoded", Decoded);
+  const decoded = Decoded(IdToken);
   this.User = new _amazonCognitoIdentityJs.CognitoUser({
     Username: decoded['cognito:username'],
     Pool: this.Pool
