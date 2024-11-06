@@ -21,6 +21,7 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
   this.Username = null;
   this.Details = null;
   this.RefreshToken = null;
+  this.AccessToken = null;
   if (!prepopulate) return;
   const decoded = jwtDecode(IdToken);
   this.User = new _amazonCognitoIdentityJs.CognitoUser({
@@ -45,6 +46,7 @@ function Authenticator(UserPoolId, ClientId, IdToken, AccessToken, RefreshToken)
     RefreshToken: refreshTokenObj
   });
   this.RefreshToken = refreshTokenObj;
+  this.AccessToken = accessTokenObj;
   this.User.setSignInUserSession(session);
 }
 Authenticator.prototype.setUsername = function (Username) {
@@ -127,6 +129,7 @@ Authenticator.prototype.submitPassword = function (Password) {
     this.User.authenticateUser(this.Details, {
       onSuccess: session => {
         this.RefreshToken = session.refreshToken;
+        this.AccessToken = session.accessToken;
         resolve({
           status: "success",
           token: session.idToken.jwtToken,
@@ -198,10 +201,13 @@ Authenticator.prototype.refreshToken = function () {
         status: "failure",
         error
       });else {
+        this.AccessToken = session.accessToken;
         this.RefreshToken = session.refreshToken;
         resolve({
           status: "success",
           token: session.idToken.jwtToken,
+          access: session.accessToken.jwtToken,
+          refresh: session.refreshToken.jwtToken,
           session
         });
       }
