@@ -74,11 +74,14 @@ Authenticator.prototype.requestOtp = async function(OnGenerateOtpEndpoint,OnMail
     });
 }
 
-Authenticator.prototype.submitOtp = async function(ChallengeResponse) {
+Authenticator.prototype.submitOtp = async function(SessionId, ChallengeResponse) {
+  this.User.Session = SessionId;
+  this.User.setAuthenticationFlowType('CUSTOM_AUTH');
   return new Promise(async(resolve, reject) => {
       const handler = {
         onSuccess: async (session) => {
           this.RefreshToken = session.refreshToken;
+          this.AccessToken = session.accessToken;          
           resolve({ status: "success", token: session.idToken.jwtToken, session });
         },
         onFailure: (error) => {

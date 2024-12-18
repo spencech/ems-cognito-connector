@@ -108,21 +108,24 @@ Authenticator.prototype.requestOtp = /*#__PURE__*/function () {
   };
 }();
 Authenticator.prototype.submitOtp = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator(function* (ChallengeResponse) {
+  var _ref3 = _asyncToGenerator(function* (SessionId, ChallengeResponse) {
     var _this2 = this;
+    this.User.Session = SessionId;
+    this.User.setAuthenticationFlowType('CUSTOM_AUTH');
     return new Promise(/*#__PURE__*/function () {
       var _ref4 = _asyncToGenerator(function* (resolve, reject) {
         var handler = {
           onSuccess: function () {
             var _onSuccess = _asyncToGenerator(function* (session) {
               _this2.RefreshToken = session.refreshToken;
+              _this2.AccessToken = session.accessToken;
               resolve({
                 status: "success",
                 token: session.idToken.jwtToken,
                 session
               });
             });
-            function onSuccess(_x9) {
+            function onSuccess(_x10) {
               return _onSuccess.apply(this, arguments);
             }
             return onSuccess;
@@ -141,7 +144,7 @@ Authenticator.prototype.submitOtp = /*#__PURE__*/function () {
                 challengeParameters
               });
             });
-            function customChallenge(_x10) {
+            function customChallenge(_x11) {
               return _customChallenge2.apply(this, arguments);
             }
             return customChallenge;
@@ -149,12 +152,12 @@ Authenticator.prototype.submitOtp = /*#__PURE__*/function () {
         };
         _this2.User.sendCustomChallengeAnswer(ChallengeResponse, handler);
       });
-      return function (_x7, _x8) {
+      return function (_x8, _x9) {
         return _ref4.apply(this, arguments);
       };
     }());
   });
-  return function (_x6) {
+  return function (_x6, _x7) {
     return _ref3.apply(this, arguments);
   };
 }();
