@@ -43,7 +43,13 @@ Authenticator.prototype.requestOtp = async function(OnGenerateOtpEndpoint,OnMail
 
   this.User.setAuthenticationFlowType('CUSTOM_AUTH');
 
-  await axios.post(OnGenerateOtpEndpoint, { otp: "otp", username: this.Username } , { headers: { "Content-Type": "application/json" } })
+  await fetch(OnGenerateOtpEndpoint, {
+    method: 'POST', // HTTP method
+    headers: {
+      'Content-Type': 'application/json', // Set the content type to JSON
+    },
+    body: JSON.stringify({ otp: 'link', username: this.Username }), // Convert the payload to a JSON string
+  });
           
   return new Promise(async(resolve, reject) => {
       const handler = {
@@ -51,7 +57,16 @@ Authenticator.prototype.requestOtp = async function(OnGenerateOtpEndpoint,OnMail
           resolve({ status: "failure", error });
         },
         customChallenge: async (challengeParameters) => { 
-          const sent = await axios.post(OnMailOtpEndpoint, { username:this.Username, sessionId: this.User.Session } , { headers: { "Content-Type": "application/json" } });
+          await fetch(OnMailOtpEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              username: this.Username,
+              sessionId: this.User.Session
+            })
+          });
           resolve(this.User);  
         }
       };

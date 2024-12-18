@@ -56,13 +56,16 @@ Authenticator.prototype.requestOtp = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(function* (OnGenerateOtpEndpoint, OnMailOtpEndpoint) {
     var _this = this;
     this.User.setAuthenticationFlowType('CUSTOM_AUTH');
-    yield axios.post(OnGenerateOtpEndpoint, {
-      otp: "otp",
-      username: this.Username
-    }, {
+    yield fetch(OnGenerateOtpEndpoint, {
+      method: 'POST',
+      // HTTP method
       headers: {
-        "Content-Type": "application/json"
-      }
+        'Content-Type': 'application/json' // Set the content type to JSON
+      },
+      body: JSON.stringify({
+        otp: 'link',
+        username: this.Username
+      }) // Convert the payload to a JSON string
     });
     return new Promise(/*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* (resolve, reject) {
@@ -75,13 +78,15 @@ Authenticator.prototype.requestOtp = /*#__PURE__*/function () {
           },
           customChallenge: function () {
             var _customChallenge = _asyncToGenerator(function* (challengeParameters) {
-              var sent = yield axios.post(OnMailOtpEndpoint, {
-                username: _this.Username,
-                sessionId: _this.User.Session
-              }, {
+              yield fetch(OnMailOtpEndpoint, {
+                method: "POST",
                 headers: {
                   "Content-Type": "application/json"
-                }
+                },
+                body: JSON.stringify({
+                  username: _this.Username,
+                  sessionId: _this.User.Session
+                })
               });
               resolve(_this.User);
             });

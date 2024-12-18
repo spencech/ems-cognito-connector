@@ -61,13 +61,16 @@ Authenticator.prototype.setUsername = function (Username) {
 };
 Authenticator.prototype.requestOtp = async function (OnGenerateOtpEndpoint, OnMailOtpEndpoint) {
   this.User.setAuthenticationFlowType('CUSTOM_AUTH');
-  await _axios.default.post(OnGenerateOtpEndpoint, {
-    otp: "otp",
-    username: this.Username
-  }, {
+  await fetch(OnGenerateOtpEndpoint, {
+    method: 'POST',
+    // HTTP method
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json' // Set the content type to JSON
+    },
+    body: JSON.stringify({
+      otp: 'link',
+      username: this.Username
+    }) // Convert the payload to a JSON string
   });
   return new Promise(async (resolve, reject) => {
     const handler = {
@@ -78,13 +81,15 @@ Authenticator.prototype.requestOtp = async function (OnGenerateOtpEndpoint, OnMa
         });
       },
       customChallenge: async challengeParameters => {
-        const sent = await _axios.default.post(OnMailOtpEndpoint, {
-          username: this.Username,
-          sessionId: this.User.Session
-        }, {
+        await fetch(OnMailOtpEndpoint, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json"
-          }
+          },
+          body: JSON.stringify({
+            username: this.Username,
+            sessionId: this.User.Session
+          })
         });
         resolve(this.User);
       }
